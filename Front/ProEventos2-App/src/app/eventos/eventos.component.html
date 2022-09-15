@@ -1,7 +1,58 @@
-<h1>Eventos de Components</h1>
-
-<div *ngFor="let evento of eventos">
-<p><b>Tema:</b> {{evento.tema}}</p>
-<p><b>Local:</b> {{evento.local}}</p>
+<h2>Eventos</h2>
 <hr>
+
+<div>
+  <div class="form-group mb-2 row align-items-start">
+    <div class="col-4">
+      <label class="me-2">Filtro:</label>
+    <input
+    type="text"
+    class="form-control"
+    placeholder="Buscar"
+    [(ngModel)]="filtroLista">
+  </div>
+  </div>
 </div>
+<!-- <h3>Filtro: {{filtroLista}}</h3> -->
+
+<table class="table table-striped">
+  <thead class="table-dark">
+    <tr>
+      <th><button class="btn btn-outline-light btn-sm" (click)="changeVisibility()">{{!visibilityImg ? 'Exibir Imagem' : 'Ocultar Imagem'}}</button></th>
+      <th class="text-center">#</th>
+      <th class="text-center">Tema</th>
+      <th class="text-center">Local</th>
+      <th class="text-center">Data</th>
+      <th class="text-center">Qtd Pessoas</th>
+      <th class="text-center">Lote</th>
+      <th class="text-center">Opções</th>
+    </tr>
+  </thead>
+  <tbody *ngIf="eventos && eventos.length">
+    <tr *ngFor="let evento of eventosFiltrados">
+      <td>
+        <img
+        [collapse]="!visibilityImg"
+        [isAnimated]="true"
+        src="/assets/{{evento.imagemURL}}"
+        alt="Imagem Evento"
+        [style.margin.px]="marginImg"
+        [style.width.px]="widthImg">
+      </td>
+      <td class="text-center">{{evento.eventoId}}</td>
+      <td class="text-center">{{evento.tema}}</td>
+      <td class="text-center">{{evento.local}}</td>
+      <td class="text-center">{{evento.dataEvento}}</td>
+      <td class="text-center">{{evento.qtdPessoas}}</td>
+      <td class="text-center">{{evento.lote}}</td>
+      <td class="text-center">
+        <button class="btn btn-primary me-2 btn-sm">Editar</button>
+        <button class="btn btn-danger btn-sm">Excluir</button></td>
+    </tr>
+  </tbody>
+  <tfoot *ngIf="!eventos.length">
+    <tr>
+      <td colspan="8" class="text-center"><h4>Nenhum evento encontrado.</h4></td>
+    </tr>
+  </tfoot>
+</table>
